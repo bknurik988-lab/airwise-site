@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="kk"><head><meta charset="utf-8"><title>AIRWISE — ақылды сыныптың экологиялық мониторингі</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f8fa;--card:#fff;--tx:#0b2a4a;--mu:#5b7083;--bd:#dfeaf0;--ac:#0e8f9c;--ac2:#e3f5f6;--ok:#15934a;--warn:#c98a00;--bad:#d62b2b;--okb:#e8f7ee;--wb:#fff4d6;--bb:#fde8e8;--sh:0 4px 18px rgba(11,42,74,.07);color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1620;--card:#11222e;--tx:#e6f0f6;--mu:#8fa6b6;--bd:#21394b;--ac:#2cc2cf;--ac2:#0f3037;--ok:#3ccf7a;--warn:#f0b429;--bad:#ff6b6b;--okb:#0f2b1c;--wb:#33290a;--bb:#3a1717;--sh:none;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a1620;--card:#11222e;--tx:#e6f0f6;--mu:#8fa6b6;--bd:#21394b;--ac:#2cc2cf;--ac2:#0f3037;--ok:#3ccf7a;--warn:#f0b429;--bad:#ff6b6b;--okb:#0f2b1c;--wb:#33290a;--bb:#3a1717;--sh:none;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 Inter,system-ui,"Segoe UI",Arial,sans-serif}
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+aside{background:var(--card);border-right:1px solid var(--bd);padding:20px 14px}
+.logo{display:flex;gap:10px;align-items:center;font-weight:700;font-size:20px;letter-spacing:.3px;margin:0 6px 22px}
+.logo i{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#0e8f9c,#1fb38a);display:grid;place-items:center}
+.logo small{display:block;font-size:11px;font-weight:500;color:var(--mu);letter-spacing:0}
+nav a{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;color:var(--mu);text-decoration:none;font-weight:500;margin-bottom:2px}
+nav a:hover{background:var(--ac2)}nav a.on{background:var(--ac2);color:var(--ac);font-weight:600}
+nav b{background:var(--bad);color:#fff;border-radius:99px;font-size:11px;padding:0 7px}
+main{padding:20px 26px 40px;min-width:0}
+#top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;margin-bottom:14px}
+#top h1{font-size:20px;margin:0}#top .mu,.mu{color:var(--mu)}
+select,input[type=text],input[type=number]{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:7px 10px}
+select:focus-visible,input:focus-visible,button:focus-visible,a:focus-visible,.cp:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.banner{border-radius:12px;padding:10px 14px;margin-bottom:16px;font-weight:600;background:var(--wb);color:var(--warn);border:1px solid var(--warn)}
+.banner.real{background:var(--okb);color:var(--ok);border-color:var(--ok)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh);padding:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+.pill{display:inline-block;border-radius:99px;padding:2px 10px;font-size:12px;font-weight:600}
+.pill.ok{background:var(--okb);color:var(--ok)}.pill.warn{background:var(--wb);color:var(--warn)}.pill.bad{background:var(--bb);color:var(--bad)}
+.met{cursor:pointer;transition:transform .15s}.met:hover{transform:translateY(-2px)}
+.met .h{display:flex;justify-content:space-between;align-items:center;font-weight:600}
+.met .v{font-size:34px;font-weight:700;margin:6px 0 0}.met .v small{font-size:14px;color:var(--mu);font-weight:500}
+.met .r{font-size:12px;color:var(--mu);display:flex;justify-content:space-between;margin-top:4px}
+.hero{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.ring{position:relative;width:120px;height:120px;flex:none}.ring svg{width:120px;height:120px}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:30px;padding-bottom:12px}.ring i{position:absolute;left:0;right:0;bottom:30px;text-align:center;font-style:normal;font-size:11px;color:var(--mu)}
+.rb{fill:none;stroke:var(--bd);stroke-width:10}.rf{fill:none;stroke-width:10;stroke-linecap:round}.rf.ok{stroke:var(--ok)}.rf.warn{stroke:var(--warn)}.rf.bad{stroke:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:6px 14px;font:inherit;cursor:pointer}
+.chip.on{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
+.btn{border:0;background:var(--ac);color:#fff;border-radius:10px;padding:8px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn.g{background:var(--ac2);color:var(--ac)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:12px 0}
+.stats .card{padding:12px}.stats b{display:block;font-size:22px}.stats span{color:var(--mu);font-size:12px}
+.ch{position:relative;overflow-x:auto}.ch svg{width:100%;min-width:560px;height:auto;display:block}
+.tip{position:absolute;top:6px;pointer-events:none;background:var(--tx);color:var(--bg);border-radius:8px;padding:5px 9px;font-size:12px;white-space:nowrap;display:none;transform:translateX(-50%)}
+.ax{fill:var(--mu);font-size:11px}.gl{stroke:var(--bd)}
+.al{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;border-left:5px solid var(--warn)}.al.bad{border-color:var(--bad)}.al.done{opacity:.55;border-color:var(--bd)}.al>div{flex:1}
+.two{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,1fr);gap:14px}
+.cp{fill:var(--ac2);stroke:var(--ac);stroke-width:1.5;cursor:pointer}.cp:hover,.cp.sel{fill:var(--ac);}.cpt{font-size:11px;fill:var(--tx);pointer-events:none;font-weight:600}.cp.sel+.cpt{fill:#fff}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch}.flow button{flex:1;min-width:130px;text-align:left;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:12px;font:inherit;cursor:pointer}
+.flow button.on{border-color:var(--ac);background:var(--ac2)}.flow .ar{align-self:center;color:var(--mu)}
+table{width:100%;border-collapse:collapse}td,th{padding:7px 6px;text-align:left;border-bottom:1px solid var(--bd);font-size:13px}th{color:var(--mu);font-weight:500}td input{width:78px}
+.chg{color:var(--warn);font-weight:600}.sk{height:150px;border-radius:16px;background:linear-gradient(90deg,var(--bd),var(--ac2),var(--bd));background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{to{background-position:-200% 0}}
+.empty{text-align:center;padding:36px 16px}.empty h2{margin:0 0 6px}
+pre{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:10px;overflow:auto;font-size:12px}
+label.t{display:flex;gap:8px;align-items:center;margin:4px 0}
+#chat{max-height:55vh;min-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding:6px 2px}.msg{max-width:85%;padding:9px 13px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere}.msg.user{align-self:flex-end;background:var(--ac);color:#fff}.msg.assistant{align-self:flex-start;background:var(--ac2)}.msg.err{background:var(--bb);color:var(--bad)}.chip:disabled,.btn:disabled{opacity:.5;cursor:default}
+:root[data-theme="graphite"]{--bg:#0f0f10;--card:#1a1a1b;--tx:#f2f2f2;--mu:#9b9ba0;--bd:#2b2b2e;--ac:#2f6bff;--ac2:#14265a;--ok:#84cc16;--warn:#f0b429;--bad:#ff5c5c;--okb:#1d2a12;--wb:#33290a;--bb:#3a1717;--sh:none;color-scheme:dark}
+:root[data-theme="light"]{--bg:#f4f6fb;--card:#fff;--tx:#0f172a;--mu:#5b6678;--bd:#e3e8f0;--ac:#2563eb;--ac2:#e6eeff;--ok:#4d9a0b;--warn:#c98a00;--bad:#d62b2b;--okb:#eaf6dc;--wb:#fff4d6;--bb:#fde8e8;--sh:0 4px 18px rgba(15,23,42,.06);color-scheme:light}
+nav a.on{background:var(--ac);color:#fff}.logo i{background:linear-gradient(135deg,#2f6bff,#6aa0ff)}#devc{margin-top:22px}.br{display:flex;gap:24px;flex-wrap:wrap;align-items:center}.br ol{margin:6px 0 0;padding-left:20px}.br .bc{text-align:center;min-width:210px}
+@media (max-width:860px){#devc{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:860px){.app{display:block}aside{padding:10px;border-right:0;border-bottom:1px solid var(--bd)}.logo{margin-bottom:8px}nav{display:flex;overflow-x:auto;gap:4px}nav a{white-space:nowrap;gap:6px}main{padding:14px}.two{grid-template-columns:1fr}}
+</style></head><body>
+<div class="app"><aside><div class="logo"><i><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M3 9h11a3 3 0 1 0-3-3M3 15h15a3 3 0 1 1-3 3M3 12h7"/></svg></i><div>AIRWISE<small>Ақылды сынып</small></div></div><nav id="nav"></nav><div id="devc"></div></aside>
+<main><div id="top"></div><div id="ban"></div><div id="main"></div></main></div>
+<script>
+const $=s=>document.querySelector(s),clone=o=>JSON.parse(JSON.stringify(o));
+const META={co2:{n:'CO₂',u:'ppm',d:0},temp:{n:'Температура',u:'°C',d:1},hum:{n:'Ылғалдылық',u:'%',d:0},pm25:{n:'PM2.5',u:'µg/m³',d:0},pm10:{n:'PM10',u:'µg/m³',d:0},voc:{n:'VOC / газ индексі',u:'инд.',d:0},noise:{n:'Дыбыс деңгейі',u:'дБ',d:0}};
+const KEYS=Object.keys(META),CARDS=['co2','temp','hum','pm25','voc','noise'];
+const DEF={co2:[0,1000,0,1500],temp:[20,24,16,28],hum:[40,60,25,75],pm25:[0,15,0,35],pm10:[0,45,0,100],voc:[0,150,0,250],noise:[0,55,0,70]};
+let S={th:clone(DEF),demo:true,name:'8-сынып',F:false,occ:'auto',types:{},ws:'ws://192.168.4.1:81'};
+try{const x=JSON.parse(localStorage.getItem('airwise'));if(x)S={...S,...x}}catch(e){}
+const save=()=>{try{localStorage.setItem('airwise',JSON.stringify(S))}catch(e){}};
+const cv=(m,v)=>m=='temp'&&S.F?v*9/5+32:v,un=m=>m=='temp'?(S.F?'°F':'°C'):META[m].u,fv=(m,v)=>cv(m,v).toFixed(META[m].d);
+const st=(m,v)=>{const[a,b,c,d]=S.th[m];return v>d||v<c?'bad':v>b||v<a?'warn':'ok'},STN={ok:'Қалыпты',warn:'Ескерту',bad:'Қауіпті'};
+const rng=m=>{const[a,b]=S.th[m];return (a>0?fv(m,a)+'–':'≤ ')+fv(m,b)+' '+un(m)};
+/* ---------- Деректер көзі: демо симулятор ---------- */
+const D={},R={};KEYS.forEach(k=>{D[k]=[];R[k]=[]});
+const data=()=>S.demo?D:R,last=m=>{const a=data()[m];return a.length?a[a.length-1]:null},hasData=()=>KEYS.some(k=>data()[k].length);
+function occ(t,ov){if(ov=='empty')return .03;if(ov=='class')return .75;if(ov=='full')return 1;const d=new Date(t),h=d.getHours()+d.getMinutes()/60,w=d.getDay();if(w==0||w==6)return .03;return h>=8&&h<15&&!(h>=10.5&&h<10.75)?.8:.05}
+const TG={co2:o=>420+o*1250,temp:(o,t)=>20.5+o*3+Math.sin(t/864e5*6.283)*.8,hum:o=>50-o*9,pm25:o=>5+o*9,pm10:o=>9+o*14,voc:o=>55+o*150,noise:o=>36+o*26};
+const AMP={co2:12,temp:.08,hum:.4,pm25:.8,pm10:1.2,voc:6,noise:2.5},MINV={co2:400,temp:10,hum:10,pm25:1,pm10:2,voc:20,noise:30};let cur={};
+function step(m,t,o,k){let v=cur[m];v+=(TG[m](o,t)-v)*k+(Math.random()-.5)*2*AMP[m];if(m=='noise'&&o>.5&&Math.random()<.04)v+=10;return cur[m]=Math.max(MINV[m],v)}
+function seed(){KEYS.forEach(m=>D[m]=[]);const now=Date.now(),t0=now-7*864e5;KEYS.forEach(m=>cur[m]=TG[m](occ(t0,'auto'),t0));for(let t=t0;t<=now;t+=3e5){const o=occ(t,'auto');KEYS.forEach(m=>D[m].push({t,v:step(m,t,o,.3)}))}}
+function tick(){const t=Date.now(),o=occ(t,S.occ);KEYS.forEach(m=>{D[m].push({t,v:step(m,t,o,.07)});if(D[m].length>5000)D[m].shift()})}
+/* ---------- Деректер көзі: нақты ESP32 (WebSocket) ---------- */
+const Real={ws:null,state:'idle',err:'',
+ connect(){this.close();this.state='connecting';this.err='';try{const w=this.ws=new WebSocket(S.ws);
+  w.onopen=()=>{this.state='live'};
+  w.onmessage=e=>{try{const j=JSON.parse(e.data),t=Date.now();KEYS.forEach(k=>{if(typeof j[k]=='number'){R[k].push({t,v:j[k]});if(R[k].length>5000)R[k].shift()}})}catch(x){}};
+  w.onerror=()=>{this.state='error';this.err='Серверге қосылу мүмкін болмады: '+S.ws};
+  w.onclose=()=>{if(this.state!='error')this.state='idle'}}catch(e){this.state='error';this.err='Мекенжай қате: '+S.ws}},
+ close(){if(this.ws){try{this.ws.close()}catch(e){}this.ws=null}this.state='idle'}};
+/* ---------- Ескертулер ---------- */
+let A=[],muted={},aid=0;
+const MSG={co2:['CO₂ деңгейі жоғары','Бөлмені желдету ұсынылады.'],temp:['Температура жоғары','Терезені ашыңыз немесе бөлмені салқындатыңыз.'],tempL:['Температура төмен','Жылытуды тексеріңіз.'],hum:['Ауа ылғалдылығы жоғары','Бөлмені желдетіңіз.'],humL:['Ауа ылғалдылығы белгіленген деңгейден төмен','Ылғалдандырғышты қосуды қарастырыңыз.'],pm25:['PM2.5 концентрациясы жоғары','Желдетуді немесе ауа сүзгісін тексеріңіз.'],pm10:['PM10 концентрациясы жоғары','Желдетуді немесе ауа сүзгісін тексеріңіз.'],voc:['VOC көрсеткіші өсті','Ықтимал ауа ластану көздерін тексеріп, бөлмені желдетіңіз.'],noise:['Шу деңгейі жоғары','Сынып ішіндегі шу көзін азайтыңыз.']};
+function evalAlerts(){KEYS.forEach(m=>{const p=last(m);if(!p)return;const s=st(m,p.v);
+ if(s=='ok'){muted[m]=false;A.forEach(a=>{if(a.m==m&&!a.done)a.rec=true});return}
+ if(S.types[m]===false||muted[m])return;
+ const ex=A.find(a=>a.m==m&&!a.done&&!a.rec);if(ex&&(ex.lvl==s||ex.lvl=='bad'))return;if(ex)ex.done=true;
+ A.forEach(a=>{if(a.m==m&&a.rec)a.done=true});
+ const k=m+((m=='temp'||m=='hum')&&p.v<S.th[m][0]?'L':'');A.unshift({id:++aid,m,lvl:s,t:p.t,v:p.v,msg:MSG[k][0],act:MSG[k][1],done:false})})}
+const resolve=id=>{const a=A.find(x=>x.id==id);if(a){a.done=true;muted[a.m]=true}render()};
+const open_=()=>A.filter(a=>!a.done).length;
+/* ---------- Көмекші есептеулер ---------- */
+const ord={ok:0,warn:1,bad:2},overall=()=>{let o='ok';KEYS.forEach(m=>{const p=last(m);if(p){const s=st(m,p.v);if(ord[s]>ord[o])o=s}});return o};
+function score(){let s=0,n=0;['co2','pm25','voc'].forEach(m=>{const p=last(m);if(!p)return;const d=S.th[m][3],v=p.v;s+=Math.max(0,Math.min(100,100-60*v/d-(v>d?40*(v-d)/d:0)));n++});return n?Math.round(s/n):null}
+function trend(m){const a=data()[m];if(a.length<10)return'→';const f=x=>x.reduce((s,p)=>s+p.v,0)/x.length,n=a.length,d=f(a.slice(n-5))-f(a.slice(n-10,n-5)),e=S.th[m][3]*.004;return d>e?'↗':d<-e?'↘':'→'}
+function forecast(){const p=data().co2,now=p[p.length-1];if(!now)return null;const q=p.filter(x=>x.t>=now.t-9e5);if(q.length<3)return null;
+ let n=q.length,sx=0,sy=0,sxy=0,sxx=0;q.forEach(x=>{const u=(x.t-now.t)/6e4;sx+=u;sy+=x.v;sxy+=u*x.v;sxx+=u*u});let k=(n*sxy-sx*sy)/(n*sxx-sx*sx);if(!isFinite(k))k=0;
+ const series=[];for(let i=0;i<=15;i++)series.push({t:now.t+i*6e4,v:Math.max(400,Math.min(5000,now.v+k*i))});return{slope:k,pred:series[15].v,series,now}}
+const ds=(a,n=240)=>{if(a.length<=n)return a;const k=a.length/n,o=[];for(let i=0;i<n;i++){const s=a.slice(Math.floor(i*k),Math.floor((i+1)*k));o.push({t:s[s.length-1].t,v:s.reduce((x,p)=>x+p.v,0)/s.length})}return o};
+const tm=t=>new Date(t).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}),tms=t=>new Date(t).toLocaleTimeString('ru-RU');
+/* ---------- Графиктер ---------- */
+let CH={},hov=false,cid=0;
+function chart(pts,m,fc){const W=820,H=270,L=50,Rr=12,T=12,B=26,f=v=>cv(m,v),all=pts.concat(fc||[]);if(!pts.length)return'<p class="mu">Деректер жоқ</p>';
+ const id='c'+(++cid),t0=pts[0].t,t1=all[all.length-1].t,th=S.th[m].map(f),vals=all.map(p=>f(p.v));
+ let mn=Math.min(...vals,th[0]>0?th[0]:1e9),mx=Math.max(...vals,th[1]);if(Math.max(...vals)>th[1]*.9)mx=Math.max(mx,th[3]);const pd=(mx-mn)*.1||1;mn-=pd;mx+=pd;
+ const X=t=>L+(t-t0)/(t1-t0||1)*(W-L-Rr),Y=v=>T+(1-(v-mn)/(mx-mn))*(H-T-B),P=a=>a.map((p,i)=>(i?'L':'M')+X(p.t).toFixed(1)+' '+Y(f(p.v)).toFixed(1)).join('');
+ let g='';for(let i=0;i<=4;i++){const v=mn+(mx-mn)*i/4;g+=`<line class="gl" x1="${L}" x2="${W-Rr}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${L-6}" y="${Y(v)+4}" text-anchor="end">${v.toFixed(META[m].d?1:0)}</text>`}
+ for(let i=0;i<=4;i++){const t=t0+(t1-t0)*i/4;g+=`<text class="ax" x="${X(t)}" y="${H-6}" text-anchor="middle">${tm(t)}</text>`}
+ const yb=Math.min(th[1],mx),ya=th[0]>0?Math.max(th[0],mn):mn;
+ const dl=v=>v>mn&&v<mx?`<line x1="${L}" x2="${W-Rr}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--bad)" stroke-dasharray="5 4"/>`:'';
+ CH[id]={pts:all,m,X,Y,t0,t1,W,L,Rr,n:pts.length,f};
+ return`<div class="ch" data-id="${id}"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${META[m].n} графигі"><rect x="${L}" y="${Y(yb)}" width="${W-L-Rr}" height="${Math.max(0,Y(ya)-Y(yb))}" fill="var(--okb)"/>${g}${dl(th[3])}${th[2]>0?dl(th[2]):''}<line x1="${L}" x2="${W-Rr}" y1="${Y(th[1])}" y2="${Y(th[1])}" stroke="var(--warn)" stroke-dasharray="5 4"/><path d="${P(pts)}" fill="none" stroke="var(--ac)" stroke-width="2"/>${fc?`<path d="${P(fc)}" fill="none" stroke="var(--warn)" stroke-width="2.5" stroke-dasharray="6 4"/>`:''}<line id="${id}l" y1="${T}" y2="${H-B}" stroke="var(--mu)" style="display:none"/><circle id="${id}c" r="5" fill="var(--ac)" stroke="#fff" stroke-width="2" style="display:none"/></svg><div class="tip" id="${id}t"></div></div>`}
+function bindCharts(){document.querySelectorAll('.ch').forEach(el=>{const id=el.dataset.id,c=CH[id],svg=el.querySelector('svg'),tip=$('#'+id+'t'),ln=$('#'+id+'l'),ci=$('#'+id+'c');
+ el.addEventListener('pointermove',e=>{hov=true;const r=svg.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*c.W,t=c.t0+(x-c.L)/(c.W-c.L-c.Rr)*(c.t1-c.t0);let b=c.pts[0];c.pts.forEach(p=>{if(Math.abs(p.t-t)<Math.abs(b.t-t))b=p});
+  const px=c.X(b.t),py=c.Y(c.f(b.v));ln.setAttribute('x1',px);ln.setAttribute('x2',px);ci.setAttribute('cx',px);ci.setAttribute('cy',py);[ln,ci].forEach(n=>n.style.display='');
+  tip.style.display='block';tip.style.left=Math.min(Math.max(px/c.W*svg.clientWidth,70),svg.clientWidth-70)+'px';const fc=c.pts.indexOf(b)>=c.n;
+  tip.innerHTML=`${tms(b.t)}${fc?' · болжам':''}<br><b>${fv(c.m,b.v)} ${un(c.m)}</b> · ${STN[st(c.m,b.v)]}`});
+ el.addEventListener('pointerleave',()=>{hov=false;tip.style.display='none';ln.style.display=ci.style.display='none'})})}
+function spark(m,col){const a=data()[m].slice(-40);if(a.length<2)return'';const v=a.map(p=>p.v),mn=Math.min(...v),mx=Math.max(...v),h=mx-mn||1;return`<svg viewBox="0 0 120 34" width="100%" height="34" preserveAspectRatio="none"><polyline fill="none" stroke="${col}" stroke-width="2" points="${a.map((p,i)=>(i/(a.length-1)*120).toFixed(1)+','+(30-(p.v-mn)/h*26).toFixed(1)).join(' ')}"/></svg>`}
+/* ---------- Көріністер ---------- */
+let curM='co2',RH=6,selC='esp',selS=0,loading=true,view='dashboard';
+const COL={ok:'var(--ok)',warn:'var(--warn)',bad:'var(--bad)'};
+function emptyV(){const s=Real.state;return`<div class="card empty"><h2>${s=='connecting'?'Құрылғыға қосылу…':s=='error'?'Қосылу қатесі':s=='live'?'Деректер күтілуде':'Нақты құрылғы қосылмаған'}</h2><p class="mu">${s=='error'?Real.err+'. Құрылғы қосулы екенін және мекенжайды тексеріп, қайта қосылып көріңіз.':s=='live'?'ESP32 алғашқы өлшемді жіберген кезде көрсеткіштер осында пайда болады.':s=='connecting'?'Бірнеше секунд күтіңіз.':'«Баптаулар» бөлімінде ESP32 мекенжайын енгізіп, «Қосылу» батырмасын басыңыз немесе демо режимге оралыңыз.'}</p><button class="btn" onclick="location.hash='settings'">Баптауларға өту</button> <button class="btn g" onclick="setDemo(true)">Демо режимге өту</button></div>`}
+function card(m){const p=last(m),s=st(m,p.v);return`<div class="card met" tabindex="0" onclick="curM='${m}';render();$('#mon').scrollIntoView({behavior:'smooth'})" onkeydown="if(event.key=='Enter'){this.click()}"><div class="h">${META[m].n}<span class="pill ${s}">${STN[s]}</span></div><div class="v">${fv(m,p.v)} <small>${un(m)}</small> <small>${trend(m)}</small></div><div class="r"><span>Ұсынылған: ${rng(m)}</span></div>${spark(m,COL[s])}</div>`}
+function dashV(){if(!hasData())return emptyV();const sc=score(),o=overall(),C=2*Math.PI*46,bad=KEYS.filter(m=>last(m)&&st(m,last(m).v)!='ok').map(m=>META[m].n);
+ return`<div class="card hero"><div class="ring"><svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="46" class="rb"/><circle cx="55" cy="55" r="46" class="rf ${o}" stroke-dasharray="${C*sc/100} ${C}" transform="rotate(-90 55 55)"/></svg><b>${sc}</b><i>/ 100</i></div><div style="flex:1;min-width:220px"><div class="mu">Сынып ауасының жалпы сапасы</div><h2 style="margin:2px 0 6px">${sc>=70?'Жақсы':sc>=45?'Орташа':'Нашар'} <span class="pill ${o}">Жүйе күйі: ${STN[o]}</span></h2><p style="margin:0">${bad.length?'Назар аударатын көрсеткіштер: '+bad.join(', ')+'.':'Барлық көрсеткіш ұсынылған шекте.'} Белсенді ескертулер: <b>${open_()}</b>.</p><p class="mu" style="margin:6px 0 0;font-size:12px">Индекс — CO₂, PM2.5 және VOC негізіндегі жоба ішіндегі шартты баға, ресми стандарт емес.</p></div></div><div class="grid">${CARDS.map(card).join('')}</div>`}
+const RNG=[[1,'1 сағат'],[6,'6 сағат'],[24,'24 сағат'],[168,'7 күн']];
+function monV(){if(!hasData())return emptyV();const m=curM,all=data()[m],now=all[all.length-1].t,pts=all.filter(p=>p.t>=now-RH*36e5),v=pts.map(p=>p.v),avg=v.reduce((a,b)=>a+b,0)/v.length,s=st(m,v[v.length-1]);
+ return`<div class="chips">${KEYS.map(k=>`<button class="chip ${k==m?'on':''}" onclick="curM='${k}';render()">${META[k].n}</button>`).join('')}</div><div class="chips">${RNG.map(r=>`<button class="chip ${r[0]==RH?'on':''}" onclick="RH=${r[0]};render()">${r[1]}</button>`).join('')}</div>
+ <div class="stats"><div class="card"><span>Ағымдағы</span><b>${fv(m,v[v.length-1])} ${un(m)}</b><span class="pill ${s}">${STN[s]}</span></div><div class="card"><span>Ең төменгі</span><b>${fv(m,Math.min(...v))}</b></div><div class="card"><span>Ең жоғарғы</span><b>${fv(m,Math.max(...v))}</b></div><div class="card"><span>Орташа</span><b>${fv(m,avg)}</b></div></div>
+ <div class="card"><b>${META[m].n}, ${un(m)}</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Жасыл аймақ — ұсынылған шек (${rng(m)}). Сары сызық — ескерту шегі, қызыл сызық — қауіпті деңгей. Курсорды график үстіне апарыңыз.</div>${chart(ds(pts),m)}</div>`}
+function fcV(){if(!hasData())return emptyV();const f=forecast();if(!f)return'<div class="card empty"><h2>Болжам үшін деректер жеткіліксіз</h2><p class="mu">Соңғы 15 минутта кемінде 3 өлшем қажет. Біраз күтіңіз.</p></div>';
+ const hi=S.th.co2[1],dh=S.th.co2[3],s=st('co2',f.pred),sl=f.slope,now=f.now.v,pts=ds(data().co2.filter(p=>p.t>=f.now.t-36e5),120),ttl=sl>0&&now<hi?Math.round((hi-now)/sl):null;
+ return`<div class="stats"><div class="card"><span>Ағымдағы CO₂</span><b>${Math.round(now)} ppm</b></div><div class="card"><span>Өзгеру жылдамдығы</span><b>${sl>=0?'+':''}${sl.toFixed(1)} ppm/мин</b><span>${sl>.5?'өсіп жатыр':sl<-.5?'төмендеп жатыр':'тұрақты'}</span></div><div class="card"><span>15 минуттан кейін (болжам)</span><b>≈ ${Math.round(f.pred)} ppm</b><span class="pill ${s}">${STN[s]}</span></div></div>
+ ${s!='ok'||ttl!==null&&ttl<=15?`<div class="banner" style="${s=='bad'?'background:var(--bb);color:var(--bad);border-color:var(--bad)':''}">${s!='ok'?`CO₂ 15 минутта ${Math.round(f.pred)} ppm-ге жетуі мүмкін (шек: ${hi} ppm). Бөлмені алдын ала желдетіңіз.`:`Осы қарқынмен CO₂ шамамен ${ttl} минутта ${hi} ppm шегінен асуы мүмкін. Желдетуді жоспарлаңыз.`}</div>`:''}
+ <div class="card"><b>CO₂: соңғы сағат және 15 минуттық болжам (үзік сызық)</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Қазіргі шекті мәндер: ескерту ${hi} ppm, қауіпті ${dh} ppm.</div>${chart(pts,'co2',f.series)}</div>
+ <div class="card" style="margin-top:14px"><b>Болжам қалай жасалады?</b><p>Соңғы 15 минуттағы өлшемдер арқылы ең кіші квадраттар әдісімен түзу сызықты тренд есептеледі. Оның көлбеулігі — орташа өзгеру жылдамдығы (ppm/мин). Болжам = ағымдағы мән + жылдамдық × 15 минут.</p><p class="mu">Бұл жуық бағалау, кепілдік емес: терезені ашу немесе адамдардың кетуі нәтижені өзгертеді. ${S.demo?'Қазір ДЕМО / ҮЛГІЛІК деректер қолданылып жатыр.':''}</p></div>`}
+function alV(){const act=A.filter(a=>!a.done),old=A.filter(a=>a.done).slice(0,8),it=a=>`<div class="card al ${a.lvl} ${a.done?'done':''}"><div><span class="pill ${a.lvl}">${STN[a.lvl]}</span> <b>${a.msg}</b>${a.rec&&!a.done?' <span class="pill ok">көрсеткіш қалпына келді</span>':''}<div class="mu" style="font-size:12px">${META[a.m].n}: ${fv(a.m,a.v)} ${un(a.m)} · анықталды ${tms(a.t)}</div><div style="margin-top:4px">Ұсыныс: ${a.act}</div></div>${a.done?'<span class="pill ok">Шешілді</span>':`<button class="btn g" onclick="resolve(${a.id})">Шешілді</button>`}</div>`;
+ return`<h3>Белсенді ескертулер (${act.length})</h3>${act.length?act.map(it).join(''):'<div class="card empty"><h2>Белсенді ескерту жоқ</h2><p class="mu">Көрсеткіш шектен асқанда ескерту осында пайда болады. Демо режимде «Баптаулар» бөлімінен сынып жүктемесін «Сабақ» немесе «Тығыз» етіп көріңіз.</p></div>'}${old.length?'<h3>Шешілген</h3>'+old.map(it).join(''):''}`}
+const COMP=[['esp','ESP32 микроконтроллері',230,95,110,70,'Жүйенің «миы». Датчиктерден I²C/UART/аналогты желі арқылы деректерді алады, шектермен салыстырады және Wi‑Fi арқылы сайтқа жібереді. Сыртқы жабдықтарды реле арқылы басқара алады.'],
+['scd','SCD40 CO₂ датчигі',360,95,60,40,'CO₂ концентрациясын тікелей өлшейтін фотоакустикалық датчик (ppm). Температура мен ылғалдылықты да береді. I²C арқылы қосылады.'],
+['bme','BME680 датчигі',430,95,58,40,'Температура, ылғалдылық, қысым және газ/VOC кедергісін өлшейді. Ол CO₂-ні тікелей өлшемейді — CO₂ үшін SCD40 қолданылады.'],
+['pm','PM2.5 / PM10 шаң датчигі',230,190,120,80,'Лазерлі оптикалық датчик: желдеткіш ауаны тартып, шаң бөлшектерін санайды (µg/m³). Ауа кіретін тесікке жақын орналасады.'],
+['mic','Дыбыс деңгейі датчигі',370,190,60,40,'Микрофон модулі сыныптағы шу деңгейін (дБ) бағалайды. Сөйлеу жазылмайды: тек дыбыс деңгейі өлшенеді.'],
+['pwr','Қуат және байланыс модульдері',370,250,118,50,'USB‑C/5 В қуат көзі, кернеу тұрақтандырғышы және Wi‑Fi (ESP32 ішінде). Кейін реле модулі қосылуы мүмкін.'],
+['oled','OLED / LCD экран',90,95,120,70,'Құрылғының өзінде негізгі көрсеткіштер мен күйді көрсетеді, сайтсыз да ақпарат береді.'],
+['vent','Ауа кіретін желдеткіш тесіктер',85,195,110,150,'Бөлме ауасы корпус ішіне осы тесіктер арқылы кіреді. Корпус ауаны тазартпайды және ылғалдандырмайды — тек өлшейді.']];
+function devV(){const c=COMP.find(x=>x[0]==selC);
+ return`<div class="two"><div class="card"><b>Құрылғының алдыңғы көрінісі</b><div class="mu" style="font-size:12px">Компонентті басып, сипаттамасын ашыңыз.</div><svg viewBox="0 0 600 430" style="width:100%"><path d="M96 34h450v300M60 70l36-36M510 70l36-36M510 370l36-36" fill="none" stroke="var(--bd)" stroke-width="2"/><rect x="60" y="70" width="450" height="300" rx="14" fill="var(--card)" stroke="var(--tx)" stroke-width="2"/>
+ ${COMP.map(k=>k[0]=='vent'?`<g><rect class="cp ${k[0]==selC?'sel':''}" tabindex="0" role="button" aria-label="${k[1]}" data-k="${k[0]}" x="${k[2]}" y="${k[3]}" width="${k[4]}" height="${k[5]}" rx="8"/><path d="${[0,1,2,3,4,5,6,7,8,9].map(i=>`M100 ${210+i*13}h82`).join('')}" stroke="var(--mu)" stroke-width="2" pointer-events="none"/><text class="cpt" x="90" y="338" pointer-events="none">Ауа кіреді</text></g>`:`<g><rect class="cp ${k[0]==selC?'sel':''}" tabindex="0" role="button" aria-label="${k[1]}" data-k="${k[0]}" x="${k[2]}" y="${k[3]}" width="${k[4]}" height="${k[5]}" rx="8"/><text class="cpt" x="${k[2]+k[4]/2}" y="${k[3]+k[5]/2+4}" text-anchor="middle">${{esp:'ESP32',scd:'SCD40',bme:'BME680',pm:'PM2.5 / PM10',mic:'Дыбыс',pwr:'Қуат / Wi‑Fi',oled:'OLED / LCD'}[k[0]]}</text></g>`).join('')}
+ <path d="M60 392h450M60 386v12M510 386v12M40 70v300M34 70h12M34 370h12" stroke="var(--mu)" fill="none"/><text class="ax" x="285" y="412" text-anchor="middle">30 см</text><text class="ax" x="30" y="226" text-anchor="end">20 см</text><text class="ax" x="548" y="30">тереңдік 10 см</text></svg></div>
+ <div class="card"><h3 style="margin-top:0">${c[1]}</h3><p>${c[6]}</p><p class="mu" style="font-size:12px">Корпус: 30 см × 20 см × 10 см. Сыртқы жабдықтарды (желдету, ауа тазартқыш, ылғалдандырғыш) құрылғы басқара алады, бірақ олар корпустан бөлек орнатылады.</p></div></div>`}
+const STEPS=[['Датчиктер','SCD40, BME680, шаң және дыбыс датчиктері бөлме ауасын өлшейді. ESP32 оларды белгілі аралықпен (мысалы, 2–5 секунд сайын) оқиды.'],['ESP32','Шикі мәндерді физикалық бірлікке айналдырады (ppm, °C, %, µg/m³, дБ) және Wi‑Fi арқылы жіберуге дайындайды.'],['Деректерді өңдеу','Сайттағы деректер қабаты (DataSource) мәндерді қабылдап, тарихқа жазады: демо симулятор немесе WebSocket арқылы нақты ESP32.'],['Мониторинг панелі','Ағымдағы мәндер мен графиктер көрсетіледі; әр көрсеткіш баптаулардағы шектермен салыстырылып, күйі (қалыпты / ескерту / қауіпті) анықталады.'],['Ескертулер / Болжам','Шектен асқанда ескерту мен ұсыныс қалыптасады. CO₂ үшін соңғы 15 минуттың тренді бойынша келесі 15 минуттың жуық болжамы есептеледі.'],['Сыртқы жабдықтар','Желдету, ауа тазартқыш не ылғалдандырғышты реле арқылы басқару үшін ESP32 шығысы қолданылады. Бұл бөлік прототипте әлі қосылмаған болуы мүмкін.']];
+function sysV(){return`<div class="card"><b>Деректер жолы</b><div class="mu" style="font-size:12px;margin-bottom:8px">Қадамды басып, түсіндірмені оқыңыз.</div><div class="flow">${STEPS.map((s,i)=>`${i?'<span class="ar">→</span>':''}<button class="${i==selS?'on':''}" onclick="selS=${i};render()"><b>${s[0]}</b></button>`).join('')}</div><p style="margin-bottom:0"><b>${STEPS[selS][0]}.</b> ${STEPS[selS][1]}</p></div>`}
+function setV(){const f=m=>S.th[m].map((x,i)=>x!=DEF[m][i]).some(Boolean),L=['Қалыпты мин','Қалыпты макс','Қауіпті мин','Қауіпті макс'];
+ return`<div class="card"><b>Жұмыс режимі</b><div class="chips"><button class="chip ${S.demo?'on':''}" onclick="setDemo(true)">Демо режим</button><button class="chip ${!S.demo?'on':''}" onclick="setDemo(false)">Нақты құрылғы</button></div>
+ <label>ESP32 WebSocket мекенжайы: <input type="text" id="wsu" value="${S.ws}" onchange="S.ws=this.value;save()" style="min-width:230px"></label> <button class="btn g" onclick="S.ws=$('#wsu').value;save();setDemo(false)">Қосылу</button>
+ <p class="mu" style="font-size:12px">Нақты режимде құрылғы JSON жіберуі керек, мысалы: <code>{"co2":640,"temp":22.4,"hum":47,"pm25":8,"pm10":12,"voc":90,"noise":41}</code>. Сайт HTTPS арқылы ашылса, браузер <code>wss://</code> мекенжайын талап етуі мүмкін. Құрылғы қосылмаған болса, ешқандай жасанды мән көрсетілмейді.</p></div>
+ <div class="card" style="margin-top:14px"><b>Жалпы</b><div class="chips"><label>Сынып атауы: <input type="text" value="${S.name}" onchange="S.name=this.value;save();header()"></label>
+ <label>Температура: <select onchange="S.F=this.value=='F';save();render()"><option value="C" ${S.F?'':'selected'}>Цельсий (°C)</option><option value="F" ${S.F?'selected':''}>Фаренгейт (°F)</option></select></label>
+ <label>Демо жүктеме: <select onchange="S.occ=this.value;save()">${[['auto','Автоматты (кесте бойынша)'],['empty','Сынып бос'],['class','Сабақ жүріп жатыр'],['full','Тығыз толған']].map(o=>`<option value="${o[0]}" ${S.occ==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></label></div>
+ <button class="btn g" onclick="seed();A=[];muted={};render()">Демо деректерін бастапқы күйге қайтару</button></div>
+ <div class="card" style="margin-top:14px;overflow-x:auto"><b>Шекті мәндер және ескертулер</b><p class="mu" style="font-size:12px">«Анықтамалық» бағандағы мәндер — бастапқы ұсыныс. Барлық сыныптар мен елдер үшін бірдей әмбебап стандарт жоқ, сондықтан өз шектеріңізді орнатуға болады. Шектер °C бірлігімен енгізіледі.</p>
+ <table><tr><th>Көрсеткіш</th>${L.map(x=>`<th>${x}</th>`).join('')}<th>Анықтамалық</th><th>Ескерту</th></tr>${KEYS.map(m=>`<tr><td>${META[m].n}<br><span class="mu">${META[m].u}</span></td>${S.th[m].map((x,i)=>`<td><input type="number" step="any" value="${x}" onchange="setTh('${m}',${i},this.value)" aria-label="${META[m].n} ${L[i]}"></td>`).join('')}<td class="${f(m)?'chg':'mu'}">${DEF[m].join(' / ')}${f(m)?'<br>өзгертілген':''}</td><td><input type="checkbox" ${S.types[m]===false?'':'checked'} onchange="S.types['${m}']=this.checked;save()" aria-label="${META[m].n} ескертуі"></td></tr>`).join('')}</table>
+ <button class="btn g" style="margin-top:10px" onclick="S.th=clone(DEF);save();render()">Анықтамалық мәндерге қайтару</button></div>`}
+function setTh(m,i,v){v=parseFloat(v);if(isFinite(v)){S.th[m][i]=v;save();muted={}}render()}
+function setDemo(b){S.demo=b;if(b)Real.close();else Real.connect();save();render()}
+/* ---------- AI көмекші (claude sample мүмкіндігі) ---------- */
+let CHAT=[],busy=false;
+const SUG=['Қазір ауа сапасы қалай?','CO₂ неге жоғарылайды?','Сыныпты қалай дұрыс желдету керек?','Құрылғы қалай жұмыс істейді?'];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])),sb=()=>{const c=$('#chat');if(c)c.scrollTop=c.scrollHeight};
+function ctx(){const rows=KEYS.map(m=>{const p=last(m);return p?`${META[m].n}: ${fv(m,p.v)} ${un(m)} (${STN[st(m,p.v)]}, ұсынылған ${rng(m)})`:null}).filter(Boolean),f=forecast();
+ return `Сен — AIRWISE ақылды сынып мониторинг сайтының қазақ тіліндегі көмекшісісің, сенің атың BULBA AI. Мектеп оқушысына түсінікті, қысқа (6 сөйлемнен аз) және нақты жауап бер. Төмендегі деректерге сүйен, деректерде жоқ нәрсені ойлап таппа. ${S.demo?'ЕСКЕРТУ: қазір ДЕМО режим, мәндер модельденген, нақты өлшем емес — қажет болса осыны айт.':'Деректер нақты құрылғыдан келеді.'} Диагноз қойма; шекті мәндер — анықтамалық, барлық сынып пен ел үшін әмбебап стандарт емес. Құрылғы: ESP32, SCD40 (CO₂), BME680 (температура, ылғалдылық, қысым, VOC; CO₂ өлшемейді), шаң датчигі, дыбыс датчигі; корпус ауаны өзі тазартпайды, тек сыртқы жабдықты басқара алады.\nСынып: ${S.name}\nАғымдағы көрсеткіштер:\n${rows.join('\n')||'деректер жоқ'}\nАшық ескертулер: ${A.filter(a=>!a.done).map(a=>a.msg).join('; ')||'жоқ'}\n${f?`CO₂ болжамы (15 мин): шамамен ${Math.round(f.pred)} ppm, жылдамдық ${f.slope.toFixed(1)} ppm/мин`:''}`}
+async function ask(t){t=(t||'').trim();if(!t||busy)return;CHAT.push({role:'user',content:t});const r={role:'assistant',content:''};CHAT.push(r);busy=true;render();sb();
+ const h=[];CHAT.slice(0,-1).filter(m=>!m.err).slice(-9).forEach(m=>{const p=h[h.length-1];if(p&&p.role==m.role)p.content+='\n'+m.content;else h.push({role:m.role,content:m.content})});while(h.length&&h[0].role!='user')h.shift();
+ try{const res=await fetch('/.netlify/functions/bulba',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:h,context:ctx()})});if(!res.ok)throw new Error(res.status);const d=await res.json();r.content=d.text||'Жауап алу мүмкін болмады.'}
+ catch(e){r.err=1;r.content='BULBA AI серверіне қосыла алмадым. Сайт Netlify-да жарияланғанын және GEMINI_API_KEY қосылғанын тексеріңіз.'}
+ busy=false;render();sb();const q=$('#q');if(q)q.focus()}
+function botV(){return`<div class="card"><b>BULBA AI</b><div class="mu" style="font-size:12px;margin:2px 0 8px">Сыныптың ағымдағы көрсеткіштері бойынша сұрақ қойыңыз. Жауап жасанды интеллекттен келеді және қате болуы мүмкін${S.demo?'; қазір ДЕМО деректер қолданылып жатыр':''}.</div><div class="chips">${SUG.map((s,i)=>`<button class="chip" onclick="ask(SUG[${i}])" ${busy?'disabled':''}>${s}</button>`).join('')}</div><div id="chat">${CHAT.length?CHAT.map((m,i)=>`<div class="msg ${m.role} ${m.err?'err':''}"><div ${busy&&i==CHAT.length-1?'id="bl"':''}>${busy&&i==CHAT.length-1&&!m.content?'Ойланып жатыр…':esc(m.content)}</div></div>`).join(''):'<p class="mu">Мысалы: «Қазір CO₂ неге жоғары?» немесе жоғарыдағы сұрақтардың бірін басыңыз.</p>'}</div><div style="display:flex;gap:8px;margin-top:10px"><input type="text" id="q" placeholder="Сұрағыңызды жазыңыз" style="flex:1" onkeydown="if(event.key=='Enter')ask(this.value)" ${busy?'disabled':''}><button class="btn" onclick="ask($('#q').value)" ${busy?'disabled':''}>Жіберу</button></div></div>`}
+/* ---------- Тыныс алу разминкасы, тақырып, біріккен бет ---------- */
+document.documentElement.dataset.theme=S.theme||'graphite';
+const setTheme=t=>{S.theme=t;save();document.documentElement.dataset.theme=t;render()},greet=()=>{const h=new Date().getHours();return h<5?'Қайырлы түн':h<12?'Қайырлы таң':h<18?'Қайырлы күн':'Қайырлы кеш'};
+const BR={on:false,t:0,done:false};
+function brS(){const t=BR.t,p=t%12,c=(Math.floor(t/12)+1)+' / 5';if(!BR.on)return{x:BR.done?'Жарайсың! 1 минут аяқталды.':'Дайынсыз ба?',s:'',k:.7,c:BR.done?'':'«Бастау» батырмасын басыңыз'};
+ if(p<4)return{x:'Мұрынмен дем алыңыз',s:(4-p)+' с',k:.7+.3*(p+1)/4,c};if(p<6)return{x:'Кідіріңіз',s:(6-p)+' с',k:1,c};return{x:'Ауызбен жай дем шығарыңыз',s:(12-p)+' с',k:1-.3*(p-5)/6,c}}
+function brV(){const b=brS();return`<div class="card br" style="margin-top:14px"><div style="flex:1;min-width:240px"><b>Тыныс алу — 1 минут</b><div class="mu">Жай тыныс алу әдісі:</div><ol><li>Мұрынмен 4 секунд дем ал.</li><li>1–2 секунд кідір.</li><li>Ауызбен 6 секунд жай дем шығар.</li><li>5 рет қайтала.</li></ol></div><div class="bc"><div style="height:140px;display:grid;place-items:center"><div id="brc" style="width:130px;height:130px;border-radius:50%;background:radial-gradient(circle,var(--ac) 0,var(--ac2) 75%);transform:scale(${b.k});transition:transform 1s linear"></div></div><b id="brx">${b.x}</b><div class="mu"><span id="brs">${b.s}</span> <span id="brk">${b.c}</span></div><button class="btn" style="margin-top:8px" onclick="brToggle()">${BR.on?'Тоқтату':'Бастау'}</button></div></div>`}
+const brToggle=()=>{BR.on=!BR.on;BR.t=0;BR.done=false;render()};
+setInterval(()=>{if(!BR.on)return;BR.t++;if(BR.t>=60){BR.on=false;BR.t=0;BR.done=true;render();return}const b=brS(),e=$('#brc');if(e){e.style.transform='scale('+b.k+')';$('#brx').textContent=b.x;$('#brs').textContent=b.s;$('#brk').textContent=b.c}},1000);
+function homeV(){const d=dashV();return hasData()?d+brV()+'<h3 id="mon" style="margin:22px 0 0">Толық мониторинг</h3>'+monV():d}
+const V={dashboard:homeV,monitor:homeV,forecast:fcV,alerts:alV,device:devV,system:sysV,assistant:botV,settings:setV},NAV=[['dashboard','Басты бет'],['forecast','CO₂ болжамы'],['alerts','Ескертулер'],['device','Құрылғы'],['system','Жүйе схемасы'],['assistant','BULBA AI'],['settings','Баптаулар']];
+function header(){const o=hasData()?overall():null,cls=[...new Set([S.name,'7-сынып','8-сынып','9-сынып','Информатика кабинеті','Физика кабинеті'])];
+ $('#top').innerHTML=`<div><h1>${greet()}!</h1><div class="mu">Ақылды сыныптың экологиялық мониторингі · <span id="clk"></span></div></div><div class="chips" style="margin:0"><button class="chip ${(S.theme||'graphite')=='graphite'?'on':''}" onclick="setTheme('graphite')">Графит</button><button class="chip ${S.theme=='light'?'on':''}" onclick="setTheme('light')">Ақ</button><select aria-label="Сынып" onchange="S.name=this.value;save()">${cls.map(c=>`<option ${c==S.name?'selected':''}>${c}</option>`).join('')}</select>${o?`<span class="pill ${o}" style="font-size:14px;padding:5px 14px">Жүйе: ${STN[o]}</span>`:'<span class="pill warn">Деректер жоқ</span>'}</div>`;
+ $('#ban').innerHTML=S.demo?'<div class="banner">ДЕМО / ҮЛГІЛІК ДЕРЕКТЕР — нақты датчиктер қосылмаған. Көрсеткіштер модельденген және нақты өлшем емес.</div>':`<div class="banner real">Нақты құрылғы режимі · ${{idle:'қосылмаған',connecting:'қосылуда…',live:'қосылған: '+S.ws,error:'қате'}[Real.state]}</div>`;
+ $('#nav').innerHTML=NAV.map(n=>`<a href="#${n[0]}" class="${n[0]==view?'on':''}">${n[1]}${n[0]=='alerts'&&open_()?`<b>${open_()}</b>`:''}</a>`).join('');$('#devc').innerHTML=`<div class="card" style="padding:12px"><b>AIRWISE құрылғысы</b><div style="color:${S.demo?'var(--warn)':'var(--ok)'}">● ${S.demo?'Демо режим':({idle:'Қосылмаған',connecting:'Қосылуда',live:'Қосылған',error:'Қате'}[Real.state])}</div><div class="mu" style="font-size:12px">ESP32 · SCD40 · BME680</div></div>`;clock()}
+const clock=()=>{const e=$('#clk');if(e)e.textContent=new Date().toLocaleDateString('kk',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' · '+tms(Date.now())};
+function render(){CH={};const h=location.hash.slice(1);view=V[h]?h:'dashboard';header();$('#main').innerHTML=loading?'<div class="grid">'+'<div class="sk"></div>'.repeat(6)+'</div>':V[view]();bindCharts();document.querySelectorAll('.cp').forEach(e=>{const go=()=>{selC=e.dataset.k;render()};e.onclick=go;e.onkeydown=ev=>{if(ev.key=='Enter'||ev.key==' '){ev.preventDefault();go()}}})}
+addEventListener('hashchange',render);
+seed();setTimeout(()=>{loading=false;render()},600);render();
+if(!S.demo)Real.connect();
+setInterval(clock,1000);
+setInterval(()=>{if(loading)return;if(S.demo)tick();evalAlerts();if(['settings','device','system','assistant'].includes(view)||hov){header();return}render()},3000);
+</script></body></html>
